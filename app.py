@@ -51,7 +51,7 @@ if not df.empty:
         fig = px.histogram(df_f, x='AÑO', color='SECTOR')
         st.plotly_chart(fig, use_container_width=True)
 else:
-    st.error("La aplicación no pudo cargar los datos. Revisa la ruta."
+
 
     # --- SIDEBAR: FILTROS ---
     if not df.empty:
