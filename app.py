@@ -4,7 +4,7 @@ import plotly.express as px
 import os
 
 # --- CONFIGURACIÓN ---
-st.set_page_config(page_title="Dashboard Egresos Hospitalarios", layout="wide")
+st.title("📊 Análisis de Egresos Hospitalarios")
 
 
 # --- CARGA DE DATOS ---
