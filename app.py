@@ -75,7 +75,7 @@ if not df.empty:
 
             # 1. Filtramos/Agrupamos por la columna de causas
             # Asegúrate de que el nombre de la columna sea el correcto
-            nombre_columna = 'CAUSA_EXTERNA'
+            nombre_columna = 'CAUSA EXTERNA'
 
             if nombre_columna in df_f.columns:
                 top_10_causas = df_f[nombre_columna].value_counts().nlargest(10).reset_index()
