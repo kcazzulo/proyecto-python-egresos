@@ -6,7 +6,6 @@ import os
 # --- CONFIGURACIÓN ---
 st.title("📊 Análisis de Egresos Hospitalarios")
 
-
 # --- CARGA DE DATOS ---
 @st.cache_data
 def load_data():
@@ -25,10 +24,6 @@ def load_data():
 
 # --- EJECUCIÓN ---
 df = load_data()
-
-# --- INTERFAZ ---
-if not df.empty:
-    st.title("📊 Dashboard de Egresos Hospitalarios")
 
     # Filtros
     st.sidebar.markdown("## ⚙️ Filtros")
