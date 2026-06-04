@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import os
 
 # Configuración inicial (debe ser lo primero)
 st.set_page_config(page_title="Dashboard Egresos Hospitalarios", layout="wide")
