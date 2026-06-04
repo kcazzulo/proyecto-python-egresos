@@ -78,5 +78,22 @@ if not df.empty:
                          color_discrete_sequence=px.colors.qualitative.Pastel)
         st.plotly_chart(fig_pie, use_container_width=True)
 
+        with col_g2:
+            st.write("#### Egresos por Sexo")
+            # Asegúrate de que tu columna se llame 'SEXO' o cambia el nombre abajo
+            conteo_sexo = df_f['SEXO'].value_counts().reset_index()
+            conteo_sexo.columns = ['Sexo', 'Cantidad']
+
+            # Gráfico estilo "donut" que se asemeja a la imagen
+            fig_sexo = px.pie(
+                conteo_sexo,
+                values='Cantidad',
+                names='Sexo',
+                hole=0.6,  # Esto crea el agujero central
+                color_discrete_map={'MASCULINO': '#00A8E8', 'FEMENINO': '#FF6B6B'}
+            )
+            fig_sexo.update_traces(textinfo='percent+label')
+            st.plotly_chart(fig_sexo, use_container_width=True)
+
 else:
     st.error("No se pudieron cargar los datos. Verifica la ruta en tu repositorio.")
