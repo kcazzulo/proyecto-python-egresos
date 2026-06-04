@@ -4,7 +4,7 @@ import plotly.express as px
 import os
 
 # --- CONFIGURACIÓN ---
-st.set_page_config(page_title="Dashboard Egresos Hospitalarios", layout="wide")
+st.set_page_config(page_title="Análisis de Egresos Hospitalarios", layout="wide")
 
 
 # --- CARGA DE DATOS ---
@@ -16,9 +16,11 @@ def load_data():
     if not os.path.exists(file_path):
         st.error(f"Error: No se encontró el archivo en {file_path}")
         return pd.DataFrame()
+
     return pd.read_csv(file_path)
 
 
+# --- EJECUCIÓN ---
 df = load_data()
 
 # --- INTERFAZ ---
@@ -29,6 +31,7 @@ if not df.empty:
     st.sidebar.markdown("## ⚙️ Filtros de Análisis")
     min_a, max_a = int(df['AÑO'].min()), int(df['AÑO'].max())
     rango_anios = st.sidebar.slider("Rango de Años", min_a, max_a, (min_a, max_a))
+
     regiones = st.sidebar.multiselect("Región", df['REGION'].unique(), default=df['REGION'].unique())
     sectores = st.sidebar.multiselect("Sector", df['SECTOR'].unique(), default=df['SECTOR'].unique())
 
@@ -42,8 +45,10 @@ if not df.empty:
     # KPIs
     st.markdown("---")
     col1, col2, col3 = st.columns(3)
+
     total_egresos = len(df_f)
     promedio_anual = df_f.groupby('AÑO').size().mean() if not df_f.empty else 0
+
     col1.metric("Total de Egresos", f"{total_egresos:,}")
     col2.metric("Promedio Egresos/Año", f"{promedio_anual:,.0f}")
 
@@ -74,4 +79,4 @@ if not df.empty:
         st.plotly_chart(fig_pie, use_container_width=True)
 
 else:
-    st.error("No se pudieron cargar los datos.")
+    st.error("No se pudieron cargar los datos. Verifica la ruta en tu repositorio.")
