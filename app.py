@@ -79,21 +79,27 @@ if not df.empty:
         st.plotly_chart(fig_pie, use_container_width=True)
 
         with col_g2:
-            st.write("#### Egresos por Genero")
-            # Asegúrate de que tu columna se llame 'GENERO' o cambia el nombre abajo
-            conteo_genero = df_f['GENERO'].value_counts().reset_index()
-            conteo_genero.columns = ['Genero', 'Cantidad']
+            st.write("#### EGRESOS POR GÉNERO")
 
-            # Gráfico estilo "donut" que se asemeja a la imagen
-            fig_sexo = px.pie(
-                conteo_genero,
-                values='Cantidad',
-                names='Sexo',
-                hole=0.6,  # Esto crea el agujero central
-                color_discrete_map={'M': '#00A8E8', 'F': '#FF6B6B'}
-            )
-            fig_sexo.update_traces(textinfo='percent+label')
-            st.plotly_chart(fig_sexo, use_container_width=True)
+            # Nombre de columna en mayúsculas
+            columna_genero = 'GENERO'
+
+            if columna_genero in df_f.columns:
+                conteo_genero = df_f[columna_genero].value_counts().reset_index()
+                conteo_genero.columns = ['GENERO', 'CANTIDAD']
+
+                fig_sexo = px.pie(
+                    conteo_genero,
+                    values='CANTIDAD',
+                    names='GENERO',
+                    hole=0.6,
+                    # Mapeo exacto de los valores en mayúsculas
+                    color_discrete_map={'F': '#FF6B6B', 'M': '#00A8E8'}
+                )
+                fig_sexo.update_traces(textinfo='percent+label')
+                st.plotly_chart(fig_sexo, use_container_width=True)
+            else:
+                st.warning(f"La columna '{columna_genero}' no se encontró. Columnas presentes: {df_f.columns.tolist()}")
 
 else:
     st.error("No se pudieron cargar los datos. Verifica la ruta en tu repositorio.")
