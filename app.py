@@ -21,8 +21,7 @@ st.markdown("""
 @st.cache_data
 def load_data():
     # Construcción de ruta absoluta para evitar FileNotFoundError
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(base_path, 'data', 'processed', 'egresos_hospitalarios_limpio.csv.gz')
+    file_path = os.path.join(base_path, 'data', 'egresos_hospitalarios_limpio.csv')
 
     if not os.path.exists(file_path):
         st.error(f"Error: No se encontró el archivo en {file_path}")
