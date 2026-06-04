@@ -96,5 +96,3 @@ if not df.empty:
             color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'}
         )
         st.plotly_chart(fig_sexo_sector, use_container_width=True)
-
-        st.plotly_chart(fig_sexo_sector, use_container_width=True)en tu repositorio.")
