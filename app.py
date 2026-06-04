@@ -79,22 +79,23 @@ if not df.empty:
         st.plotly_chart(fig_pie, use_container_width=True)
 
 
-else:
-    st.error("No se pudieron cargar loswith col_g2:
+e# ... (esto va después de tu gráfico anterior)
+
+    with col_g2:
         st.write("#### EGRESOS POR GÉNERO Y SECTOR")
 
-        # 1. Gráfico de Género (Donut con colores específicos)
+        # 1. Gráfico de Género
         fig_sexo = px.pie(
             df_f,
             names='GENERO',
             hole=0.6,
             color='GENERO',
-            color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'} # Rosa y Azul
+            color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'}
         )
         fig_sexo.update_traces(textinfo='percent+label')
         st.plotly_chart(fig_sexo, use_container_width=True)
 
-        # 2. Gráfico de Sexo por Sector (Barras apiladas)
+        # 2. Gráfico de Sexo por Sector
         st.write("#### DISTRIBUCIÓN POR SECTOR")
         sexo_sector = df_f.groupby(['SECTOR', 'GENERO']).size().reset_index(name='CANTIDAD')
         fig_sexo_sector = px.bar(
@@ -103,6 +104,11 @@ else:
             y='CANTIDAD',
             color='GENERO',
             barmode='group',
-            color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'})
+            color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'}
+        )
+        st.plotly_chart(fig_sexo_sector, use_container_width=True)
+
+else:
+    st.error("No se pudieron cargar los datos.")'#FF69B4', 'M': '#00A8E8'})
 
         st.plotly_chart(fig_sexo_sector, use_container_width=True)en tu repositorio.")
