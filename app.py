@@ -1,7 +1,21 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 import os
+
+
+@st.cache_data
+def load_data():
+    # Obtiene la ruta del directorio donde está app.py
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    # Crea la ruta completa hacia el archivo
+    file_path = os.path.join(base_path, 'data', 'processed', 'egresos_hospitalarios_limpio.csv.gz')
+
+    # Verificación extra para depurar
+    if not os.path.exists(file_path):
+        st.error(f"El archivo no se encuentra en: {file_path}")
+        return pd.DataFrame()  # Devuelve un DF vacío para no romper la app
+
+    return pd.read_csv(file_path)
 
 # Configuración inicial (debe ser lo primero)
 st.set_page_config(page_title="Dashboard Egresos Hospitalarios", layout="wide")
