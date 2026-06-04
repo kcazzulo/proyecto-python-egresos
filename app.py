@@ -90,7 +90,7 @@ if not df.empty:
                 values='Cantidad',
                 names='Sexo',
                 hole=0.6,  # Esto crea el agujero central
-                color_discrete_map={'MASCULINO': '#00A8E8', 'FEMENINO': '#FF6B6B'}
+                color_discrete_map={'M': '#00A8E8', 'F': '#FF6B6B'}
             )
             fig_sexo.update_traces(textinfo='percent+label')
             st.plotly_chart(fig_sexo, use_container_width=True)
