@@ -58,28 +58,17 @@ if not df.empty:
     resumen_anual = df_f.groupby('AÑO').size().reset_index(name='CANTIDAD DE EGRESOS')
     st.dataframe(resumen_anual, use_container_width=True)
 
-    # VISUALIZACIÓN DINÁMICA
-    st.subheader("📈 Visualización Dinámica")
+    # --- VISUALIZACIÓN DINÁMICA ---
+    st.subheader("📈 VISUALIZACIÓN DINÁMICA")
     col_g1, col_g2 = st.columns(2)
 
     with col_g1:
-        st.write("#### Top 10 Diagnósticos")
+        st.write("#### TOP 10 DIAGNÓSTICOS")
         top_10 = df_f['DIAGNOSTICO'].value_counts().nlargest(10).reset_index()
-        top_10.columns = ['DIAGNOSTICO', 'Cantidad']
-        fig_hist = px.bar(top_10, x='Cantidad', y='DIAGNOSTICO', orientation='h', color='Cantidad',
-                          color_continuous_scale='Blues')
+        top_10.columns = ['DIAGNOSTICO', 'CANTIDAD']
+        fig_hist = px.bar(top_10, x='CANTIDAD', y='DIAGNOSTICO', orientation='h', color='CANTIDAD',
+                          color_continuous_scale='BLUES')
         st.plotly_chart(fig_hist, use_container_width=True)
-
-    with col_g2:
-        st.write("#### Egresos por Sector")
-        conteo_sector = df_f['SECTOR'].value_counts().reset_index()
-        conteo_sector.columns = ['Sector', 'Cantidad']
-        fig_pie = px.pie(conteo_sector, values='Cantidad', names='Sector', hole=0.4,
-                         color_discrete_sequence=px.colors.qualitative.Pastel)
-        st.plotly_chart(fig_pie, use_container_width=True)
-
-
-e# ... (esto va después de tu gráfico anterior)
 
     with col_g2:
         st.write("#### EGRESOS POR GÉNERO Y SECTOR")
@@ -107,8 +96,5 @@ e# ... (esto va después de tu gráfico anterior)
             color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'}
         )
         st.plotly_chart(fig_sexo_sector, use_container_width=True)
-
-else:
-    st.error("No se pudieron cargar los datos.")'#FF69B4', 'M': '#00A8E8'})
 
         st.plotly_chart(fig_sexo_sector, use_container_width=True)en tu repositorio.")
