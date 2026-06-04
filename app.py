@@ -79,14 +79,14 @@ if not df.empty:
         st.plotly_chart(fig_pie, use_container_width=True)
 
         with col_g2:
-            st.write("#### Egresos por Sexo")
-            # Asegúrate de que tu columna se llame 'SEXO' o cambia el nombre abajo
-            conteo_sexo = df_f['SEXO'].value_counts().reset_index()
-            conteo_sexo.columns = ['Sexo', 'Cantidad']
+            st.write("#### Egresos por Genero")
+            # Asegúrate de que tu columna se llame 'GENERO' o cambia el nombre abajo
+            conteo_genero = df_f['GENERO'].value_counts().reset_index()
+            conteo_genero.columns = ['Genero', 'Cantidad']
 
             # Gráfico estilo "donut" que se asemeja a la imagen
             fig_sexo = px.pie(
-                conteo_sexo,
+                conteo_genero,
                 values='Cantidad',
                 names='Sexo',
                 hole=0.6,  # Esto crea el agujero central
