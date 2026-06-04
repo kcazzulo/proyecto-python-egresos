@@ -78,28 +78,31 @@ if not df.empty:
                          color_discrete_sequence=px.colors.qualitative.Pastel)
         st.plotly_chart(fig_pie, use_container_width=True)
 
-        with col_g2:
-            st.write("#### EGRESOS POR GÉNERO")
-
-            # Nombre de columna en mayúsculas
-            columna_genero = 'GENERO'
-
-            if columna_genero in df_f.columns:
-                conteo_genero = df_f[columna_genero].value_counts().reset_index()
-                conteo_genero.columns = ['GENERO', 'CANTIDAD']
-
-                fig_sexo = px.pie(
-                    conteo_genero,
-                    values='CANTIDAD',
-                    names='GENERO',
-                    hole=0.6,
-                    # Mapeo exacto de los valores en mayúsculas
-                    color_discrete_map={'F': '#FF6B6B', 'M': '#00A8E8'}
-                )
-                fig_sexo.update_traces(textinfo='percent+label')
-                st.plotly_chart(fig_sexo, use_container_width=True)
-            else:
-                st.warning(f"La columna '{columna_genero}' no se encontró. Columnas presentes: {df_f.columns.tolist()}")
 
 else:
-    st.error("No se pudieron cargar los datos. Verifica la ruta en tu repositorio.")
+    st.error("No se pudieron cargar loswith col_g2:
+        st.write("#### EGRESOS POR GÉNERO Y SECTOR")
+
+        # 1. Gráfico de Género (Donut con colores específicos)
+        fig_sexo = px.pie(
+            df_f,
+            names='GENERO',
+            hole=0.6,
+            color='GENERO',
+            color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'} # Rosa y Azul
+        )
+        fig_sexo.update_traces(textinfo='percent+label')
+        st.plotly_chart(fig_sexo, use_container_width=True)
+
+        # 2. Gráfico de Sexo por Sector (Barras apiladas)
+        st.write("#### DISTRIBUCIÓN POR SECTOR")
+        sexo_sector = df_f.groupby(['SECTOR', 'GENERO']).size().reset_index(name='CANTIDAD')
+        fig_sexo_sector = px.bar(
+            sexo_sector,
+            x='SECTOR',
+            y='CANTIDAD',
+            color='GENERO',
+            barmode='group',
+            color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'})
+
+        st.plotly_chart(fig_sexo_sector, use_container_width=True)en tu repositorio.")
