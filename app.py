@@ -70,6 +70,33 @@ if not df.empty:
                           color_continuous_scale='BLUES')
         st.plotly_chart(fig_hist, use_container_width=True)
 
+        with col_g1:  # O la columna donde quieras ubicarlo
+            st.write("#### TOP 10 CAUSAS EXTERNAS")
+
+            # 1. Filtramos/Agrupamos por la columna de causas
+            # Asegúrate de que el nombre de la columna sea el correcto
+            nombre_columna = 'CAUSA_EXTERNA'
+
+            if nombre_columna in df_f.columns:
+                top_10_causas = df_f[nombre_columna].value_counts().nlargest(10).reset_index()
+                top_10_causas.columns = ['CAUSA', 'CANTIDAD']
+
+                # 2. Creamos el gráfico de barras horizontales
+                fig_causas = px.bar(
+                    top_10_causas,
+                    x='CANTIDAD',
+                    y='CAUSA',
+                    orientation='h',
+                    color='CANTIDAD',
+                    color_continuous_scale='Reds'  # 'Reds' ayuda a resaltar causas críticas
+                )
+                # 3. Invertimos el eje para que el top 1 aparezca arriba
+                fig_causas.update_layout(yaxis={'categoryorder': 'total ascending'})
+
+                st.plotly_chart(fig_causas, use_container_width=True)
+            else:
+                st.warning(f"La columna '{nombre_columna}' no existe en los datos.")
+
     with col_g2:
         st.write("#### EGRESOS POR GÉNERO Y SECTOR")
 
