@@ -1,3 +1,12 @@
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+import os
+
+# --- CONFIGURACIÓN ---
+st.set_page_config(page_title="Análisis de Egresos Hospitalarios", layout="wide")
+
+
 # --- VISUALIZACIÓN DINÁMICA ---
 st.subheader("📈 VISUALIZACIÓN DINÁMICA")
 
