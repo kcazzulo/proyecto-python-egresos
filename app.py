@@ -9,14 +9,16 @@ st.set_page_config(page_title="Análisis de Egresos Hospitalarios", layout="wide
 # --- CARGA DE DATOS ---
 @st.cache_data
 def load_data():
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(base_path, 'data', 'egresos_hospitalarios_limpio.csv')
-    if not os.path.exists(file_path):
-        st.error(f"Error: No se encontró el archivo en {file_path}")
-        return pd.DataFrame()
-    return pd.read_csv(file_path)
+    # Usamos la ruta relativa exacta que ya sabíamos que funcionaba
+    # Asegúrate de que el archivo esté en la subcarpeta 'data'
+    file_path = os.path.join('data', 'EGRESOS_HOSPITALARIOS_LIMPIO.CSV')
 
-df = load_data()
+    if not os.path.exists(file_path):
+        # Esto nos dirá exactamente qué está pasando si falla
+        st.error(f"Error: No se encontró el archivo en la ruta esperada: {os.path.abspath(file_path)}")
+        return pd.DataFrame()
+
+    return pd.read_csv(file_path)
 
 if not df.empty:
     st.title("📊 Análisis de Egresos Hospitalarios")
