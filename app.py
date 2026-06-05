@@ -58,43 +58,32 @@ if not df.empty:
     resumen_anual = df_f.groupby('AÑO').size().reset_index(name='CANTIDAD DE EGRESOS')
     st.dataframe(resumen_anual, use_container_width=True)
 
-    # --- VISUALIZACIÓN DINÁMICA ---
     st.subheader("📈 VISUALIZACIÓN DINÁMICA")
-
-    # Creamos las dos columnas principales
+    # Definimos dos columnas principales
     col_izq, col_der = st.columns(2)
 
     with col_izq:
-        # 1. TOP 10 DIAGNÓSTICOS (Arriba a la izquierda)
+        # Diagnósticos
         st.write("#### TOP 10 DIAGNÓSTICOS")
-        top_10 = df_f['DIAGNOSTICO'].value_counts().nlargest(10).reset_index()
-        top_10.columns = ['DIAGNOSTICO', 'CANTIDAD']
-        fig_hist = px.bar(top_10, x='CANTIDAD', y='DIAGNOSTICO', orientation='h', color='CANTIDAD',
-                          color_continuous_scale='BLUES')
+        # ... (tu código de diagnóstico)
         st.plotly_chart(fig_hist, use_container_width=True)
 
-        # 2. TOP 10 CAUSAS EXTERNAS (Abajo a la izquierda)
+        st.divider()  # Línea para separar visualmente
+
+        # Causas Externas
         st.write("#### TOP 10 CAUSAS EXTERNAS")
-        nombre_columna = 'CAUSA EXTERNA'  # Ajusta si el nombre en el CSV es distinto
-        if nombre_columna in df_f.columns:
-            top_10_causas = df_f[nombre_columna].value_counts().nlargest(10).reset_index()
-            top_10_causas.columns = ['CAUSA', 'CANTIDAD']
-            fig_causas = px.bar(top_10_causas, x='CANTIDAD', y='CAUSA', orientation='h', color='CANTIDAD',
-                                color_continuous_scale='Reds')
-            fig_causas.update_layout(yaxis={'categoryorder': 'total ascending'})
-            st.plotly_chart(fig_causas, use_container_width=True)
+        # ... (tu código de causas)
+        st.plotly_chart(fig_causas, use_container_width=True)
 
     with col_der:
-        # 3. EGRESOS POR GÉNERO (Arriba a la derecha)
+        # Género
         st.write("#### EGRESOS POR GÉNERO")
-        fig_sexo = px.pie(df_f, names='GENERO', hole=0.6, color='GENERO',
-                          color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'})
-        fig_sexo.update_traces(textinfo='percent+label')
+        # ... (tu código de género)
         st.plotly_chart(fig_sexo, use_container_width=True)
 
-        # 4. DISTRIBUCIÓN POR SECTOR (Abajo a la derecha)
+        st.divider()  # Línea para separar visualmente
+
+        # Sector
         st.write("#### DISTRIBUCIÓN POR SECTOR")
-        sexo_sector = df_f.groupby(['SECTOR', 'GENERO']).size().reset_index(name='CANTIDAD')
-        fig_sexo_sector = px.bar(sexo_sector, x='SECTOR', y='CANTIDAD', color='GENERO', barmode='group',
-                                 color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'})
+        # ... (tu código de sector)
         st.plotly_chart(fig_sexo_sector, use_container_width=True)
