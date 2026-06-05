@@ -82,4 +82,27 @@ with row2_col2:
     fig_scatter = px.scatter(scatter_data, x='AÑO', y='CANTIDAD', size='CANTIDAD', color='CANTIDAD')
     st.plotly_chart(fig_scatter, use_container_width=True)
 
+# --- NUEVO GRÁFICO: ANÁLISIS DE CAUSAS EXTERNAS ---
+st.markdown("---")
+st.subheader("⚠️ Análisis de Causas Externas")
 
+# Filtramos para ver solo registros con causa externa (ajusta el valor según tus datos)
+# Si tu columna tiene valores como 'SI'/'NO' o tipos de causa, ajusta el filtro:
+if 'CAUSA_EXTERNA' in df_f.columns:
+    df_causas = df_f[df_f['CAUSA_EXTERNA'].notna()]
+
+    col_c1, col_c2 = st.columns([1, 1])
+
+    with col_c1:
+        st.write("#### Distribución por tipo de Causa Externa")
+        fig_causas = px.pie(df_causas, names='CAUSA_EXTERNA', hole=0.4,
+                            color_discrete_sequence=px.colors.sequential.RdBu)
+        st.plotly_chart(fig_causas, use_container_width=True)
+
+    with col_c2:
+        st.write("#### Evolución temporal de Causas Externas")
+        causas_tiempo = df_causas.groupby(['AÑO', 'CAUSA_EXTERNA']).size().reset_index(name='TOTAL')
+        fig_line_causas = px.line(causas_tiempo, x='AÑO', y='TOTAL', color='CAUSA_EXTERNA', markers=True)
+        st.plotly_chart(fig_line_causas, use_container_width=True)
+else:
+    st.warning("La columna 'CAUSA_EXTERNA' no fue encontrada en el dataset.")
