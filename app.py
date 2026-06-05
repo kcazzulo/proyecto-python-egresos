@@ -19,27 +19,20 @@ def load_data():
         return None
     return pd.read_csv(file_path)
 
-
 # --- EJECUCIÓN ---
 df = load_data()
 
 # --- VALIDACIÓN CRÍTICA ---
 if df is None:
-    st.error("Error crítico: No se encontró el archivo en /data/egresos_hospitalarios_limpio.csv")
-    st.info(
-        "Verifica en GitHub que la carpeta 'data' exista y que el nombre del archivo coincida exactamente (incluyendo mayúsculas).")
-    st.stop()  # <--- ESTO DETIENE LA APP Y EVITA EL NAMEERROR
+    st.error("Error crítico: No se encontró el archivo...")
+    st.stop()
 
-# --- INTERFAZ (Solo se ejecuta si df no es None) ---
+# --- INTERFAZ (Esta línea debe estar alineada al margen izquierdo) ---
 st.title("📊 Análisis de Egresos Hospitalarios")
-# ... resto de tu código ...
 
-    # SIDEBAR: FILTROS
-    st.sidebar.markdown("## ⚙️ Filtros de Análisis")
-    min_a, max_a = int(df['AÑO'].min()), int(df['AÑO'].max())
-    rango_anios = st.sidebar.slider("Rango de Años", min_a, max_a, (min_a, max_a))
-    regiones = st.sidebar.multiselect("Región", df['REGION'].unique(), default=df['REGION'].unique())
-    sectores = st.sidebar.multiselect("Sector", df['SECTOR'].unique(), default=df['SECTOR'].unique())
+# SIDEBAR: FILTROS (Sin espacios antes de la 's' de st)
+st.sidebar.markdown("## ⚙️ Filtros de Análisis")
+min_a, max_a = int(df['AÑO'].min()), int(df['AÑO'].max())
 
     # APLICACIÓN DE FILTROS
     df_f = df[(df['AÑO'].between(rango_anios[0], rango_anios[1])) &
