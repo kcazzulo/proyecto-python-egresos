@@ -101,3 +101,14 @@ if 'CAUSA EXTERNA' in df_f.columns:
 
 else:
     st.warning("La columna 'CAUSA EXTERNA' no fue detectada en los datos.")
+
+    st.subheader("🚀 Tasa de Crecimiento Anual de Egresos")
+    # Calculamos el total por año
+    df_anual = df_f.groupby('AÑO').size().reset_index(name='EGRESOS')
+    # Calculamos el cambio porcentual
+    df_anual['CRECIMIENTO_%'] = df_anual['EGRESOS'].pct_change() * 100
+
+    fig_growth = px.bar(df_anual, x='AÑO', y='CRECIMIENTO_%',
+                        title="Variación porcentual de egresos respecto al año anterior",
+                        color='CRECIMIENTO_%', color_continuous_scale='RdYlGn')
+    st.plotly_chart(fig_growth, use_container_width=True)
