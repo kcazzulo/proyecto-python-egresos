@@ -39,7 +39,6 @@ df_f = df[(df['AÑO'].between(rango_anios[0], rango_anios[1])) &
           (df['SECTOR'].isin(sectores))]
 
 # --- 4. RESUMEN DESCRIPTIVO (REQUISITOS ACADÉMICOS) ---
-st.title("📊 Análisis de Egresos Hospitalarios")
 st.markdown("---")
 st.subheader("📋 Resumen Descriptivo Estadístico")
 
