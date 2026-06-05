@@ -24,20 +24,23 @@ df = load_data()
 
 # --- VALIDACIÓN CRÍTICA ---
 if df is None:
-    st.error("Error crítico: No se encontró el archivo...")
+    st.error("Error crítico: No se encontró el archivo.")
     st.stop()
 
-# --- INTERFAZ (Esta línea debe estar alineada al margen izquierdo) ---
+# --- INTERFAZ ---
 st.title("📊 Análisis de Egresos Hospitalarios")
 
-# SIDEBAR: FILTROS (Sin espacios antes de la 's' de st)
+# SIDEBAR: FILTROS
 st.sidebar.markdown("## ⚙️ Filtros de Análisis")
 min_a, max_a = int(df['AÑO'].min()), int(df['AÑO'].max())
+rango_anios = st.sidebar.slider("Rango de Años", min_a, max_a, (min_a, max_a))
+regiones = st.sidebar.multiselect("Región", df['REGION'].unique(), default=df['REGION'].unique())
+sectores = st.sidebar.multiselect("Sector", df['SECTOR'].unique(), default=df['SECTOR'].unique())
 
-    # APLICACIÓN DE FILTROS
-    df_f = df[(df['AÑO'].between(rango_anios[0], rango_anios[1])) &
-              (df['REGION'].isin(regiones)) &
-              (df['SECTOR'].isin(sectores))]
+# APLICACIÓN DE FILTROS (Asegúrate de que esta línea empiece pegada al margen izquierdo)
+df_f = df[(df['AÑO'].between(rango_anios[0], rango_anios[1])) &
+          (df['REGION'].isin(regiones)) &
+          (df['SECTOR'].isin(sectores))]
 
     # RESUMEN ESTADÍSTICO (REQUISITO ACADÉMICO)
     st.markdown("---")
