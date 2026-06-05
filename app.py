@@ -6,6 +6,29 @@ import os
 # --- CONFIGURACIÓN ---
 st.set_page_config(page_title="Análisis de Egresos Hospitalarios", layout="wide")
 
+# 1. CARGA (Esto ya lo tienes)
+df = load_data()
+
+# 2. DEFINICIÓN SEGURA (Añade este bloque antes de usar df_f)
+# Si no hay datos, inicializamos un DataFrame vacío para evitar el NameError
+if not df.empty:
+    # APLICACIÓN DE FILTROS
+    df_f = df[
+        (df['AÑO'].between(rango_anios[0], rango_anios[1])) &
+        (df['REGION'].isin(regiones)) &
+        (df['SECTOR'].isin(sectores))
+    ]
+else:
+    df_f = pd.DataFrame() # DataFrame vacío si algo falló en la carga
+
+# 3. USO DE LOS DATOS
+if not df_f.empty:
+    # Ahora sí, el código de los gráficos puede ejecutarse
+    top_10 = df_f['DIAGNOSTICO'].value_counts().nlargest(10).reset_index()
+    # ... resto de tu código ...
+else:
+    st.warning("No hay datos disponibles con los filtros seleccionados.")
+
 
 # --- VISUALIZACIÓN DINÁMICA ---
 st.subheader("📈 VISUALIZACIÓN DINÁMICA")
