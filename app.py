@@ -101,8 +101,8 @@ if 'CAUSA_EXTERNA' in df_f.columns:
 
     with col_c2:
         st.write("#### Evolución temporal de Causas Externas")
-        causas_tiempo = df_causas.groupby(['AÑO', 'CAUSA_EXTERNA']).size().reset_index(name='TOTAL')
-        fig_line_causas = px.line(causas_tiempo, x='AÑO', y='TOTAL', color='CAUSA_EXTERNA', markers=True)
+        causas_tiempo = df_causas.groupby(['AÑO', 'CAUSA EXTERNA']).size().reset_index(name='TOTAL')
+        fig_line_causas = px.line(causas_tiempo, x='AÑO', y='TOTAL', color='CAUSA EXTERNA', markers=True)
         st.plotly_chart(fig_line_causas, use_container_width=True)
 else:
     st.warning("La columna 'CAUSA_EXTERNA' no fue encontrada en el dataset.")
