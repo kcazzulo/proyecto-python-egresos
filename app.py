@@ -37,6 +37,13 @@ df_f = df[(df['AÑO'].between(rango_anios[0], rango_anios[1])) &
 # --- INTERFAZ ---
 st.title("📊 Análisis Exploratorio de Egresos Hospitalarios")
 
+# --- RESUMEN ESTADÍSTICO (Al final, para no romper el diseño) ---
+with st.expander("Ver Resumen Descriptivo Estadístico"):
+    stats = df_f.describe().T[['mean', 'std', '50%', '25%', '75%', 'min', 'max']]
+    stats['range'] = stats['max'] - stats['min']
+    stats.columns = ['Media', 'Desv. Estándar', 'Mediana', '25%', '75%', 'Mínimo', 'Máximo', 'Rango']
+    st.dataframe(stats, use_container_width=True)
+
 # --- KPIs (Formato imagen profesional) ---
 kpi1, kpi2, kpi3, kpi4 = st.columns(4)
 kpi1.metric("Total de Egresos", f"{len(df_f):,}")
@@ -82,10 +89,3 @@ with col_izq:
     st.write("#### DISTRIBUCIÓN DEL TARGET (HISTOGRAMA)")
     fig_target = px.histogram(df_f, x='AÑO', nbins=20, title="Distribución de la variable AÑO")
     st.plotly_chart(fig_target, use_container_width=True)
-
-# --- RESUMEN ESTADÍSTICO (Al final, para no romper el diseño) ---
-with st.expander("Ver Resumen Descriptivo Estadístico"):
-    stats = df_f.describe().T[['mean', 'std', '50%', '25%', '75%', 'min', 'max']]
-    stats['range'] = stats['max'] - stats['min']
-    stats.columns = ['Media', 'Desv. Estándar', 'Mediana', '25%', '75%', 'Mínimo', 'Máximo', 'Rango']
-    st.dataframe(stats, use_container_width=True)
