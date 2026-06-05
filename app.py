@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import os
+import sys  # <--- IMPORTANTE: Importa sys para detener la app si falla
 
 # --- CONFIGURACIÓN ---
 st.set_page_config(page_title="Análisis de Egresos Hospitalarios", layout="wide")
@@ -10,22 +11,28 @@ st.set_page_config(page_title="Análisis de Egresos Hospitalarios", layout="wide
 # --- CARGA DE DATOS ---
 @st.cache_data
 def load_data():
-    # Buscamos en la carpeta 'data' dentro de la ruta actual
-    ruta_carpeta = os.path.join(os.getcwd(), 'data')
-    archivo_objetivo = 'egresos_hospitalarios_limpio.csv'
-    file_path = os.path.join(ruta_carpeta, archivo_objetivo)
+    # Buscamos en la carpeta 'data'
+    # Ajusta aquí SIEMPRE el nombre exacto del archivo que ves en GitHub
+    file_path = os.path.join('data', 'egresos_hospitalarios_limpio.csv')
 
     if not os.path.exists(file_path):
-        # Esta parte nos dirá qué está pasando realmente
-        contenido = os.listdir(os.getcwd()) if not os.path.exists(ruta_carpeta) else os.listdir(ruta_carpeta)
-        st.error(f"Error: No encontré '{archivo_objetivo}' en {ruta_carpeta}")
-        st.write(f"Archivos encontrados en la carpeta donde busqué: {contenido}")
-        return pd.DataFrame()
-
+        return None
     return pd.read_csv(file_path)
-# --- INTERFAZ ---
-if not df.empty:
-    st.title("📊 Análisis de Egresos Hospitalarios")
+
+
+# --- EJECUCIÓN ---
+df = load_data()
+
+# --- VALIDACIÓN CRÍTICA ---
+if df is None:
+    st.error("Error crítico: No se encontró el archivo en /data/egresos_hospitalarios_limpio.csv")
+    st.info(
+        "Verifica en GitHub que la carpeta 'data' exista y que el nombre del archivo coincida exactamente (incluyendo mayúsculas).")
+    st.stop()  # <--- ESTO DETIENE LA APP Y EVITA EL NAMEERROR
+
+# --- INTERFAZ (Solo se ejecuta si df no es None) ---
+st.title("📊 Análisis de Egresos Hospitalarios")
+# ... resto de tu código ...
 
     # SIDEBAR: FILTROS
     st.sidebar.markdown("## ⚙️ Filtros de Análisis")
