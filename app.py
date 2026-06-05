@@ -6,22 +6,38 @@ import os
 # --- CONFIGURACIÓN ---
 st.set_page_config(page_title="Análisis de Egresos Hospitalarios", layout="wide")
 
+
 # --- CARGA DE DATOS ---
 @st.cache_data
 def load_data():
-    # Usamos la ruta relativa exacta que ya sabíamos que funcionaba
-    # Asegúrate de que el archivo esté en la subcarpeta 'data'
-    file_path = os.path.join('data', 'EGRESOS_HOSPITALARIOS_LIMPIO.CSV')
+    # 1. Definimos la ruta usando la carpeta actual donde está app.py
+    # Buscamos en la subcarpeta 'data'
+    carpeta_data = os.path.join(os.getcwd(), 'data')
+
+    # 2. Listamos lo que realmente existe en esa carpeta para depurar
+    if os.path.exists(carpeta_data):
+        archivos = os.listdir(carpeta_data)
+    else:
+        archivos = "La carpeta 'data' no existe."
+
+    # 3. Intentamos cargar el archivo (ajusta el nombre al que veas en tu GitHub)
+    file_path = os.path.join(carpeta_data, 'EGRESOS_HOSPITALARIOS_LIMPIO.CSV')
 
     if not os.path.exists(file_path):
-        # Esto nos dirá exactamente qué está pasando si falla
-        st.error(f"Error: No se encontró el archivo en la ruta esperada: {os.path.abspath(file_path)}")
-        return pd.DataFrame()
+        st.error(f"¡NO SE ENCONTRÓ EL ARCHIVO! Busqué en: {file_path}")
+        st.write(f"Archivos encontrados en la carpeta 'data': {archivos}")
+        return None  # Devolvemos None en lugar de un DataFrame vacío
 
     return pd.read_csv(file_path)
 
-if not df.empty:
+
+# --- EJECUCIÓN ---
+df = load_data()
+
+# --- INTERFAZ ---
+if df is not None:  # Verificamos que no sea None
     st.title("📊 Análisis de Egresos Hospitalarios")
+    # ... resto de tu código ...
 
     # SIDEBAR: FILTROS
     st.sidebar.markdown("## ⚙️ Filtros de Análisis")
