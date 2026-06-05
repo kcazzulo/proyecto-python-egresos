@@ -38,11 +38,15 @@ df_f = df[(df['AÑO'].between(rango_anios[0], rango_anios[1])) &
           (df['REGION'].isin(regiones)) &
           (df['SECTOR'].isin(sectores))]
 
-# --- RESUMEN ESTADÍSTICO ---
+# --- 4. RESUMEN DESCRIPTIVO (REQUISITOS ACADÉMICOS) ---
+st.title("📊 Análisis de Egresos Hospitalarios")
 st.markdown("---")
-st.subheader("📊 Análisis Descriptivo Estadístico")
-stats = df_f.describe().T[['mean', 'std', 'min', 'max', '50%']]
-stats.columns = ['Media', 'Desviación Estándar', 'Mínimo', 'Máximo', 'Mediana']
+st.subheader("📋 Resumen Descriptivo Estadístico")
+
+# Cálculo de estadísticas incluyendo rango (Máx - Mín) y cuartiles (vía describe)
+stats = df_f.describe().T[['mean', 'std', '50%', '25%', '75%', 'min', 'max']]
+stats['range'] = stats['max'] - stats['min']
+stats.columns = ['Media', 'Desv. Estándar', 'Mediana', '25%', '75%', 'Mínimo', 'Máximo', 'Rango']
 st.dataframe(stats, use_container_width=True)
 
 # KPIs
