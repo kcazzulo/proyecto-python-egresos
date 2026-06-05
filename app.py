@@ -75,6 +75,14 @@ with row2_col2:
     fig_scatter = px.scatter(scatter_data, x='AÑO', y='CANTIDAD', size='CANTIDAD', color='CANTIDAD')
     st.plotly_chart(fig_scatter, use_container_width=True)
 
+with col_izq:
+    # ... tu código actual ...
+
+    # AGREGAR ESTO:
+    st.write("#### DISTRIBUCIÓN DEL TARGET (HISTOGRAMA)")
+    fig_target = px.histogram(df_f, x='AÑO', nbins=20, title="Distribución de la variable AÑO")
+    st.plotly_chart(fig_target, use_container_width=True)
+
 # --- RESUMEN ESTADÍSTICO (Al final, para no romper el diseño) ---
 with st.expander("Ver Resumen Descriptivo Estadístico"):
     stats = df_f.describe().T[['mean', 'std', '50%', '25%', '75%', 'min', 'max']]
