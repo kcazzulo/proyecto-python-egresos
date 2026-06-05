@@ -105,4 +105,4 @@ if 'CAUSA_EXTERNA' in df_f.columns:
         fig_line_causas = px.line(causas_tiempo, x='AÑO', y='TOTAL', color='CAUSA EXTERNA', markers=True)
         st.plotly_chart(fig_line_causas, use_container_width=True)
 else:
-    st.warning("La columna 'CAUSA_EXTERNA' no fue encontrada en el dataset.")
+    st.warning("La columna 'CAUSA EXTERNA' no fue encontrada en el dataset.")
