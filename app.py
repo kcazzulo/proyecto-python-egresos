@@ -41,8 +41,6 @@ st.title("📊 Análisis Exploratorio de Egresos Hospitalarios")
 kpi1, kpi2, kpi3, kpi4 = st.columns(4)
 kpi1.metric("Total de Egresos", f"{len(df_f):,}")
 kpi2.metric("Promedio Egresos/Año", f"{df_f.groupby('AÑO').size().mean():,.0f}")
-kpi3.metric("Días Estancia (prom)", "5,7")
-kpi4.metric("% Egresos Prog.", "68,3%")
 
 st.markdown("---")
 
