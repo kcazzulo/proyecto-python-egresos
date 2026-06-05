@@ -130,3 +130,21 @@ if 'CAUSA EXTERNA' in df_f.columns:
     st.plotly_chart(fig_causas_anio, use_container_width=True)
 else:
     st.warning("La columna 'CAUSA EXTERNA' no existe en el dataset.")
+
+    # --- ANÁLISIS DE EGRESOS POR GRUPO ETAREO SEGÚN AÑO ---
+    st.markdown("---")
+    st.subheader("👥 Egresos por Grupo Etareo según Año")
+
+    if 'GRUPO ETAREO' in df_f.columns:
+        # Agrupamos por AÑO y GRUPO ETAREO
+        df_etario = df_f.groupby(['AÑO', 'GRUPO ETAREO']).size().reset_index(name='TOTAL')
+
+        # Gráfico de barras
+        fig_etario = px.bar(df_etario, x='AÑO', y='TOTAL', color='GRUPO ETAREO',
+                            title="Distribución de Egresos por Grupo Etareo a lo largo de los años",
+                            barmode='group',  # 'group' para comparar barras lado a lado
+                            color_discrete_sequence=px.colors.qualitative.Pastel)
+
+        st.plotly_chart(fig_etario, use_container_width=True)
+    else:
+        st.warning("La columna 'GRUPO ETAREO' no fue detectada en los datos. Verifica el nombre.")
