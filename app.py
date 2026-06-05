@@ -5,7 +5,30 @@ import os
 import sys
 
 # --- CONFIGURACIÓN ---
-st.set_page_config(page_title="Análisis de Egresos Hospitalarios", layout="wide")
+st.set_page_config(page_title="Análisis de Egresos Hospitalarios", layout="wide")# --- CSS PARA EL COLOR VIOLETA PASTEL ---
+st.markdown("""
+    <style>
+    /* Cambia el color del slider y los selectores */
+    [data-baseweb="slider"] div[role="slider"] {
+        background-color: #9370DB !important;
+    }
+    .stSlider [data-baseweb="slider"] > div:nth-child(1) {
+        background-color: #E6E6FA !important;
+    }
+    /* Cambia el color de selección en multiselect */
+    div[data-baseweb="select"] {
+        border-color: #9370DB !important;
+    }
+    /* Estilo para los botones */
+    div.stButton > button {
+        background-color: #E6E6FA !important;
+        color: #4B0082 !important;
+        border: 1px solid #9370DB !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
 
 # --- CARGA DE DATOS ---
 @st.cache_data
