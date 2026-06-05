@@ -99,11 +99,5 @@ if 'CAUSA EXTERNA' in df_f.columns:
                             color_discrete_sequence=px.colors.sequential.RdBu)
         st.plotly_chart(fig_causas, use_container_width=True)
 
-    with col_c2:
-        st.write("#### Evolución temporal")
-        # Agrupamos por año y causa para ver la tendencia
-        causas_tiempo = df_causas.groupby(['AÑO', 'CAUSA EXTERNA']).size().reset_index(name='TOTAL')
-        fig_line_causas = px.line(causas_tiempo, x='AÑO', y='TOTAL', color='CAUSA EXTERNA', markers=True)
-        st.plotly_chart(fig_line_causas, use_container_width=True)
 else:
     st.warning("La columna 'CAUSA EXTERNA' no fue detectada en los datos.")
