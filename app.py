@@ -6,17 +6,23 @@ import os
 # --- CONFIGURACIÓN ---
 st.set_page_config(page_title="Análisis de Egresos Hospitalarios", layout="wide")
 
+
 # --- CARGA DE DATOS ---
 @st.cache_data
 def load_data():
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(base_path, 'data', 'egresos_hospitalarios_limpio.csv')
+    # Buscamos en la carpeta 'data' dentro de la ruta actual
+    ruta_carpeta = os.path.join(os.getcwd(), 'data')
+    archivo_objetivo = 'egresos_hospitalarios_limpio.csv'
+    file_path = os.path.join(ruta_carpeta, archivo_objetivo)
+
     if not os.path.exists(file_path):
+        # Esta parte nos dirá qué está pasando realmente
+        contenido = os.listdir(os.getcwd()) if not os.path.exists(ruta_carpeta) else os.listdir(ruta_carpeta)
+        st.error(f"Error: No encontré '{archivo_objetivo}' en {ruta_carpeta}")
+        st.write(f"Archivos encontrados en la carpeta donde busqué: {contenido}")
         return pd.DataFrame()
+
     return pd.read_csv(file_path)
-
-df = load_data()
-
 # --- INTERFAZ ---
 if not df.empty:
     st.title("📊 Análisis de Egresos Hospitalarios")
