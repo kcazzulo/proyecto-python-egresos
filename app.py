@@ -83,9 +83,7 @@ with row2_col2:
     st.plotly_chart(fig_scatter, use_container_width=True)
 
 with col_izq:
-    # ... tu código actual ...
-
-    # AGREGAR ESTO:
+  # AGREGAR ESTO:
     st.write("#### DISTRIBUCIÓN DEL TARGET (HISTOGRAMA)")
     fig_target = px.histogram(df_f, x='AÑO', nbins=20, title="Distribución de la variable AÑO")
     st.plotly_chart(fig_target, use_container_width=True)
