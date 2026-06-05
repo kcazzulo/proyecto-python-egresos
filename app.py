@@ -112,3 +112,21 @@ else:
                         title="Variación porcentual de egresos respecto al año anterior",
                         color='CRECIMIENTO_%', color_continuous_scale='RdYlGn')
     st.plotly_chart(fig_growth, use_container_width=True)
+
+# --- ANÁLISIS DE CAUSAS EXTERNAS PREDOMINANTES POR AÑO ---
+st.markdown("---")
+st.subheader("⚠️ Causas Externas Predominantes por Año")
+
+if 'CAUSA EXTERNA' in df_f.columns:
+    # Agrupamos por AÑO y CAUSA EXTERNA
+    df_causas_anio = df_f.groupby(['AÑO', 'CAUSA EXTERNA']).size().reset_index(name='TOTAL')
+
+    # Gráfico de barras apiladas
+    fig_causas_anio = px.bar(df_causas_anio, x='AÑO', y='TOTAL', color='CAUSA EXTERNA',
+                             title="Distribución de Causas Externas a lo largo de los años",
+                             barmode='stack',  # Apilado para ver el total y la composición
+                             color_discrete_sequence=px.colors.qualitative.Pastel)
+
+    st.plotly_chart(fig_causas_anio, use_container_width=True)
+else:
+    st.warning("La columna 'CAUSA EXTERNA' no existe en el dataset.")
