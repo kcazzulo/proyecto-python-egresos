@@ -60,6 +60,13 @@ with col_izq:
     fig_hist = px.bar(top_10, x='count', y='DIAGNOSTICO', orientation='h', color='count', color_continuous_scale='Blues')
     st.plotly_chart(fig_hist, use_container_width=True)
 
+    # NUEVO: EGRESOS POR SECTOR Y AÑO
+    st.write("#### EGRESOS POR SECTOR Y AÑO")
+    sector_anio = df_f.groupby(['AÑO', 'SECTOR']).size().reset_index(name='CANTIDAD')
+    fig_sector_anio = px.bar(sector_anio, x='AÑO', y='CANTIDAD', color='SECTOR', barmode='stack',
+                             title="Evolución de Egresos por Sector")
+    st.plotly_chart(fig_sector_anio, use_container_width=True)
+
 with col_der:
     st.write("#### EGRESOS POR GÉNERO")
     fig_sexo = px.pie(df_f, names='GENERO', hole=0.6, color='GENERO', color_discrete_map={'F': '#FF69B4', 'M': '#00A8E8'})
